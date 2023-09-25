@@ -48,7 +48,6 @@ export function Footer() {
     return (
         <footer ref={inViewRef} className={`mb-[40px]`} >
             <p className="mt-2 text-xs op-60 ">
-     //           <span className="">{'Free Plan'}</span>
             {/*    <span className="px-1"> | </span>*/}
             {/*    <span className="">Left: </span>*/}
             {/*    { isSuccess && <>*/}
