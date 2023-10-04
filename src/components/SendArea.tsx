@@ -62,8 +62,8 @@ const SendArea = forwardRef(({
     }
     const description = useMemo(() => {
         const imageLength = imageSrcs.length;
-        return imageLength > 0 ? imageLength>1? `Blend ${imageLength} uploaded images`:
-            `Describe 1 uploaded images` : "Enter your description here...";
+        return imageLength > 0 ? imageLength>1? `Click Send to Blend ${imageLength} uploaded images`:
+            `Click Send to describe 1 uploaded image` : "Enter image description here...";
     }, [imageSrcs])
 
     const inDescriptionOrBlend = useMemo(() => {
