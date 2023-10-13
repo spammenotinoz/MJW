@@ -12,4 +12,4 @@ import * as fs from 'fs';
 const fileContent: string = fs.readFileSync('/stats/mjw.stats', 'utf-8');
 
 // Export the file content as a constant string
-export const FILE_CONTENT: string = fileContent;
+export const MJW_STATS: string = fileContent;
