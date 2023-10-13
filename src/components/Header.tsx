@@ -17,3 +17,5 @@ const Header = () => {
         </header>
     );
 };
+
+export { Header};
