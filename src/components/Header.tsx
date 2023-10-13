@@ -1,5 +1,4 @@
-import Logo from '@/components/icons/Logo';
-import ThemeToggle from '@/components/ThemeToggle';
+import { GITHUB_ORG_URL, MJW_STATS } from '@/utils/constants';
 
 const Header = () => {
     return (
@@ -12,8 +11,9 @@ const Header = () => {
                 <span className="gpt-title">MIDJOURNEY</span>
                 <span className="gpt-subtitle">WEB</span>
             </div>
+            <p className="mt-1 opacity-60">
+                Powered by {MJW_STATS}
+            </p>
         </header>
     );
 };
-
-export { Header};
