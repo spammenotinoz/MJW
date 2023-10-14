@@ -6,7 +6,10 @@ export const RATE_LIMIT_COUNT = 5
 export const OPS_URL = 'https://artificin.com/prompt-builder/'
 export const GITHUB_ORG_URL = 'https://github.com/ConnectAI-E'
 
+import * as fs from 'fs';
+
 // Read the contents of the file synchronously (you can use asynchronous methods as well)
-// const fileContent: string = fs.readFileSync('/stats/mjw.stats', 'utf-8');
+const fileContent: string = fs.readFileSync('/stats/mjw.stats', 'utf-8');
+
 // Export the file content as a constant string
-// export const MJW_STATS: string = fileContent;
+export const FILE_CONTENT: string = fileContent;
