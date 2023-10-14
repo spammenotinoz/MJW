@@ -14,7 +14,7 @@ const Header = () => {
                 <span className="gpt-subtitle">WEB</span>
             </div>
             <p className="mt-1 opacity-60">
-                {MJW_STATS}
+                
             </p>
         </header>
     );
