@@ -5,9 +5,6 @@ import UploadImage from '@/components/UploadImage';
 import { useAtom } from 'jotai';
 import { uploadImagesUrlAtom } from '@/hooks/useUplodImage';
 
-// Import the stats constant from the stats.js file
-import { stats } from './stats';
-
 interface SendAreaProps {
   handleKeydown: (e: KeyboardEvent) => void;
   handleButtonClick: () => void;
@@ -34,6 +31,7 @@ const SendArea: FunctionComponent<SendAreaProps> = forwardRef(
     const textareaRef = useRef(null);
     const [imageSrcs, setImageSrcs] = useState<string[]>([]);
     const [imageUploadSrc, setImageUpload] = useAtom(uploadImagesUrlAtom);
+    const [stats, setStats] = useState<string>(''); // Initialize stats as an empty string
 
     useEffect(() => {
       setImageUpload(imageSrcs);
@@ -83,18 +81,27 @@ const SendArea: FunctionComponent<SendAreaProps> = forwardRef(
       return imageLength > 0;
     }, [imageSrcs]);
 
-    // Function to update the stats every 5 minutes
-    const updateStats = () => {
-      // Fetch new stats data or update the stats string as needed
-      // For simplicity, we'll just append a timestamp to the existing stats
-      const updatedStats = `${stats} (Last updated: ${new Date().toLocaleTimeString()})`;
-      // Update the stats
-      setStats(updatedStats);
+    // Function to fetch and update the stats every 5 minutes
+    const fetchAndUpdateStats = async () => {
+      try {
+        // Make an HTTP request to fetch the stats data
+        const response = await fetch('/stats.txt');
+        if (response.ok) {
+          const statsData = await response.text();
+          // Update the stats
+          setStats(statsData);
+        } else {
+          console.error('Failed to fetch stats data');
+        }
+      } catch (error) {
+        console.error('Error fetching stats data:', error);
+      }
     };
 
-    // Update the stats every 5 minutes (300,000 milliseconds)
+    // Update the stats initially and every 5 minutes (300,000 milliseconds)
     useEffect(() => {
-      const intervalId = setInterval(updateStats, 300000);
+      fetchAndUpdateStats(); // Fetch initially
+      const intervalId = setInterval(fetchAndUpdateStats, 300000);
 
       // Cleanup the interval when the component unmounts
       return () => clearInterval(intervalId);
@@ -157,10 +164,10 @@ const SendArea: FunctionComponent<SendAreaProps> = forwardRef(
               >
                 <ClearIcon />
               </button>
-            </div>
 
-            {/* Display the stats text below the send icon */}
-            <div className="stats-text">{stats}</div>
+              {/* Display the stats text below the send icon */}
+              <div className="stats-text">{stats}</div>
+            </div>
           </div>
         )}
       </div>
