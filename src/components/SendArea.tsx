@@ -1,42 +1,77 @@
-import { FunctionComponent, useEffect, useRef, useState, useMemo } from 'react';
-import { forwardRef, useImperativeHandle } from 'react';
+import {FunctionComponent} from 'react';
 import ClearIcon from './icons/Clear';
 import UploadImage from '@/components/UploadImage';
-import { useAtom } from 'jotai';
-import { uploadImagesUrlAtom } from '@/hooks/useUplodImage';
+import {useAtom} from 'jotai';
+import {uploadImagesUrlAtom} from '@/hooks/useUplodImage';
 
 interface SendAreaProps {
-  handleKeydown: (e: KeyboardEvent) => void;
-  handleButtonClick: () => void;
-  handleStopClick: () => void;
-  clear: () => void;
-  inputRefItem: any;
-  ifLoading: boolean;
-  ifDisabled: boolean;
+    handleKeydown: (e: KeyboardEvent) => void;
+    handleButtonClick: () => void;
+    handleStopClick: () => void;
+    clear: () => void;
+    inputRefItem: any;
+    ifLoading: boolean;
+    ifDisabled: boolean;
 }
 
-const SendArea: FunctionComponent<SendAreaProps> = forwardRef(
-  (
-    {
-      ifDisabled,
-      handleKeydown,
-      handleButtonClick,
-      handleStopClick,
-      clear,
-      inputRefItem,
-      ifLoading,
-    }: SendAreaProps,
-    ref
-  ) => {
+const SendArea = forwardRef(({
+                                                        ifDisabled,
+                                                        handleKeydown,
+                                                        handleButtonClick,
+                                                        handleStopClick,
+                                                        clear,
+                                                        inputRefItem,
+                                                        ifLoading,
+                                                    }:SendAreaProps,ref) => {
+
     const textareaRef = useRef(null);
     const [imageSrcs, setImageSrcs] = useState<string[]>([]);
-    const [imageUploadSrc, setImageUpload] = useAtom(uploadImagesUrlAtom);
-    const [stats, setStats] = useState<string>('');
+    const [imageUploadSrc,setImageUpload] = useAtom(uploadImagesUrlAtom)
+    useEffect(() => {
+        setImageUpload(imageSrcs)
+        // if(imageSrcs.length===0) return
+        console.log(imageSrcs);
+    },[imageSrcs])
 
-    // (rest of your component logic)
+    const handlePaste = (event: any) => {
+        const items = (event.clipboardData || event.originalEvent.clipboardData).items;
+        const imageFiles = [] as any;
 
+        for (const item of items) {
+            if (item.type.indexOf('image') !== -1) {
+                const file = item.getAsFile();
+                const imageUrl = URL.createObjectURL(file);
+                imageFiles.push(imageUrl);
+            }
+        }
+        setImageSrcs([...imageSrcs, ...imageFiles]);
+    };
+
+    function emptyImagesSrc(){
+        setImageSrcs([])
+    }
+
+    useImperativeHandle(ref, () => ({
+        emptyImagesSrc
+    }));
+
+    const handleDeleteByIndex = (index: number) => {
+        const newImageSrcs = [...imageSrcs];
+        newImageSrcs.splice(index, 1);
+        setImageSrcs(newImageSrcs);
+    }
+    const description = useMemo(() => {
+        const imageLength = imageSrcs.length;
+        return imageLength > 0 ? imageLength>1? `Click Send to Blend ${imageLength} uploaded images`:
+            `Click Send to describe 1 uploaded image` : "Enter image description here...";
+    }, [imageSrcs])
+
+    const inDescriptionOrBlend = useMemo(() => {
+        const imageLength = imageSrcs.length;
+        return imageLength > 0 
+    }, [imageSrcs])
     return (
-      <div className="fixed left-1/2 transform -translate-x-1/2 bottom-40px md:max-w-[90%] md:w-[560px] sm:w-[90%] lg:w-[50%] backdrop-blur-md pt-1 px-4 pb-4 z-100 text-[16px] rounded-md">
+      <div className="fixed left-1/2 transform -translate-x-1/2 bottom-40px md:max-w-[90%] md:w-[560px] sm:w-[90%] lg:w-[50%] backdrop-blur-md pt-1 px-4 pb-4 z-100 text-[16px] rounded-md">  
         {ifLoading ? (
           <div className="gen-cb-wrapper">
             <span>Thinking...</span>
@@ -58,7 +93,7 @@ const SendArea: FunctionComponent<SendAreaProps> = forwardRef(
             )}
             <div
               className={
-                ifDisabled ? 'op-50 gen-text-wrapper' : 'gen-text-wrapper'
+                ifDisabled ? "op-50 gen-text-wrapper" : "gen-text-wrapper"
               }
             >
               <textarea
@@ -66,11 +101,12 @@ const SendArea: FunctionComponent<SendAreaProps> = forwardRef(
                 ref={inputRefItem}
                 placeholder={description}
                 autoComplete="off"
+                // @ts-ignore
                 onKeyDown={handleKeydown}
                 disabled={ifDisabled || inDescriptionOrBlend}
                 autoFocus
                 onInput={() => {
-                  inputRefItem.current.style.height = 'auto';
+                  inputRefItem.current.style.height = "auto";
                   inputRefItem.current.style.height = `${inputRefItem.current.scrollHeight}px`;
                 }}
                 className="gen-textarea"
@@ -92,13 +128,10 @@ const SendArea: FunctionComponent<SendAreaProps> = forwardRef(
                 <ClearIcon />
               </button>
             </div>
-            {/* Centered stats text below the Send and Clear buttons */}
-            <div className="text-center my-2">{stats}</div>
           </div>
         )}
       </div>
     );
-  }
-);
+})
 
 export default SendArea;
