@@ -28,7 +28,12 @@ const SendArea: FunctionComponent<SendAreaProps> = forwardRef(
     }: SendAreaProps,
     ref
   ) => {
-    // ... (other parts of your component state and methods)
+    const textareaRef = useRef(null);
+    const [imageSrcs, setImageSrcs] = useState<string[]>([]);
+    const [imageUploadSrc, setImageUpload] = useAtom(uploadImagesUrlAtom);
+    const [stats, setStats] = useState<string>('');
+
+    // (rest of your component logic)
 
     return (
       <div className="fixed left-1/2 transform -translate-x-1/2 bottom-40px md:max-w-[90%] md:w-[560px] sm:sm:w-[90%] backdrop-blur-md pt-1 px-4 pb-4 z-100 text-[16px] rounded-md">
@@ -57,7 +62,19 @@ const SendArea: FunctionComponent<SendAreaProps> = forwardRef(
               }
             >
               <textarea
-                // ... (all the textarea properties and event handlers)
+                onPaste={handlePaste}
+                ref={inputRefItem}
+                placeholder={description}
+                autoComplete="off"
+                onKeyDown={handleKeydown}
+                disabled={ifDisabled || inDescriptionOrBlend}
+                autoFocus
+                onInput={() => {
+                  inputRefItem.current.style.height = 'auto';
+                  inputRefItem.current.style.height = `${inputRefItem.current.scrollHeight}px`;
+                }}
+                className="gen-textarea"
+                rows={1}
               />
               <button
                 onClick={handleButtonClick}
@@ -74,10 +91,9 @@ const SendArea: FunctionComponent<SendAreaProps> = forwardRef(
               >
                 <ClearIcon />
               </button>
-
-              {/* Centered stats text below the Send and Clear buttons */}
-              <div className="stats-text text-center my-2">{stats}</div>
             </div>
+            {/* Centered stats text below the Send and Clear buttons */}
+            <div className="text-center my-2">{stats}</div>
           </div>
         )}
       </div>
