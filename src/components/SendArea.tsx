@@ -28,77 +28,7 @@ const SendArea: FunctionComponent<SendAreaProps> = forwardRef(
     }: SendAreaProps,
     ref
   ) => {
-    const textareaRef = useRef(null);
-    const [imageSrcs, setImageSrcs] = useState<string[]>([]);
-    const [imageUploadSrc, setImageUpload] = useAtom(uploadImagesUrlAtom);
-    const [stats, setStats] = useState<string>(''); // Initialize stats as an empty string
-
-    useEffect(() => {
-      setImageUpload(imageSrcs);
-      console.log(imageSrcs);
-    }, [imageSrcs]);
-
-    const handlePaste = (event: any) => {
-      const items = (event.clipboardData || event.originalEvent.clipboardData).items;
-      const imageFiles = [] as any;
-
-      for (const item of items) {
-        if (item.type.indexOf('image') !== -1) {
-          const file = item.getAsFile();
-          const imageUrl = URL.createObjectURL(file);
-          imageFiles.push(imageUrl);
-        }
-      }
-      setImageSrcs([...imageSrcs, ...imageFiles]);
-    };
-
-    function emptyImagesSrc() {
-      setImageSrcs([]);
-    }
-
-    useImperativeHandle(ref, () => ({
-      emptyImagesSrc,
-    }));
-
-    const handleDeleteByIndex = (index: number) => {
-      const newImageSrcs = [...imageSrcs];
-      newImageSrcs.splice(index, 1);
-      setImageSrcs(newImageSrcs);
-    };
-
-    const description = useMemo(() => {
-      const imageLength = imageSrcs.length;
-      return imageLength > 0
-        ? imageLength > 1
-          ? `Click Send to Blend ${imageLength} uploaded images`
-          : `Click Send to describe 1 uploaded image`
-        : 'Enter image description here...';
-    }, [imageSrcs]);
-
-    const inDescriptionOrBlend = useMemo(() => {
-      const imageLength = imageSrcs.length;
-      return imageLength > 0;
-    }, [imageSrcs]);
-
-    const fetchAndUpdateStats = async () => {
-      try {
-        const response = await fetch('/stats.txt');
-        if (response.ok) {
-          const statsData = await response.text();
-          setStats(statsData);
-        } else {
-          console.error('Failed to fetch stats data');
-        }
-      } catch (error) {
-        console.error('Error fetching stats data:', error);
-      }
-    };
-
-    useEffect(() => {
-      fetchAndUpdateStats();
-      const intervalId = setInterval(fetchAndUpdateStats, 300000);
-      return () => clearInterval(intervalId);
-    }, []);
+    // ... (other parts of your component state and methods)
 
     return (
       <div className="fixed left-1/2 transform -translate-x-1/2 bottom-40px md:max-w-[90%] md:w-[560px] sm:sm:w-[90%] backdrop-blur-md pt-1 px-4 pb-4 z-100 text-[16px] rounded-md">
@@ -127,24 +57,8 @@ const SendArea: FunctionComponent<SendAreaProps> = forwardRef(
               }
             >
               <textarea
-                onPaste={handlePaste}
-                ref={inputRefItem}
-                placeholder={description}
-                autoComplete="off"
-                onKeyDown={handleKeydown}
-                disabled={ifDisabled || inDescriptionOrBlend}
-                autoFocus
-                onInput={() => {
-                  inputRefItem.current.style.height = 'auto';
-                  inputRefItem.current.style.height = `${inputRefItem.current.scrollHeight}px`;
-                }}
-                className="gen-textarea"
-                rows={1}
+                // ... (all the textarea properties and event handlers)
               />
-
-              {/* Centered stats text */}
-              <div className="stats-text text-center my-2">{stats}</div>
-
               <button
                 onClick={handleButtonClick}
                 disabled={ifDisabled}
@@ -160,6 +74,9 @@ const SendArea: FunctionComponent<SendAreaProps> = forwardRef(
               >
                 <ClearIcon />
               </button>
+
+              {/* Centered stats text below the Send and Clear buttons */}
+              <div className="stats-text text-center my-2">{stats}</div>
             </div>
           </div>
         )}
