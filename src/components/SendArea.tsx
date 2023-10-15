@@ -31,9 +31,81 @@ const SendArea: FunctionComponent<SendAreaProps> = forwardRef(
     const textareaRef = useRef(null);
     const [imageSrcs, setImageSrcs] = useState<string[]>([]);
     const [imageUploadSrc, setImageUpload] = useAtom(uploadImagesUrlAtom);
-    const [stats, setStats] = useState<string>('');
+    const [stats, setStats] = useState<string>(''); // Initialize stats as an empty string
 
-    // (rest of your component logic)
+    useEffect(() => {
+      setImageUpload(imageSrcs);
+      // if(imageSrcs.length===0) return
+      console.log(imageSrcs);
+    }, [imageSrcs]);
+
+    const handlePaste = (event: any) => {
+      const items = (event.clipboardData || event.originalEvent.clipboardData).items;
+      const imageFiles = [] as any;
+
+      for (const item of items) {
+        if (item.type.indexOf('image') !== -1) {
+          const file = item.getAsFile();
+          const imageUrl = URL.createObjectURL(file);
+          imageFiles.push(imageUrl);
+        }
+      }
+      setImageSrcs([...imageSrcs, ...imageFiles]);
+    };
+
+    function emptyImagesSrc() {
+      setImageSrcs([]);
+    }
+
+    useImperativeHandle(ref, () => ({
+      emptyImagesSrc,
+    }));
+
+    const handleDeleteByIndex = (index: number) => {
+      const newImageSrcs = [...imageSrcs];
+      newImageSrcs.splice(index, 1);
+      setImageSrcs(newImageSrcs);
+    };
+
+    const description = useMemo(() => {
+      const imageLength = imageSrcs.length;
+      return imageLength > 0
+        ? imageLength > 1
+          ? `Click Send to Blend ${imageLength} uploaded images`
+          : `Click Send to describe 1 uploaded image`
+        : 'Enter image description here...';
+    }, [imageSrcs]);
+
+    const inDescriptionOrBlend = useMemo(() => {
+      const imageLength = imageSrcs.length;
+      return imageLength > 0;
+    }, [imageSrcs]);
+
+    // Function to fetch and update the stats every 5 minutes
+    const fetchAndUpdateStats = async () => {
+      try {
+        // Make an HTTP request to fetch the stats data
+        const response = await fetch('/stats.txt');
+        if (response.ok) {
+          const statsData = await response.text();
+          // Update the stats
+          setStats(statsData);
+        } else {
+          console.error('Failed to fetch stats data');
+        }
+      } catch (error) {
+        console.error('Error fetching stats data:', error);
+      }
+    };
+
+    // Update the stats initially and every 5 minutes (300,000 milliseconds)
+    useEffect(() => {
+      fetchAndUpdateStats(); // Fetch initially
+      const intervalId = setInterval(fetchAndUpdateStats, 300000);
+
+      // Cleanup the interval when the component unmounts
+      return () => clearInterval(intervalId);
+    }, []);
 
     return (
       <div className="fixed left-1/2 transform -translate-x-1/2 bottom-40px md:max-w-[90%] md:w-[560px] sm:sm:w-[90%] backdrop-blur-md pt-1 px-4 pb-4 z-100 text-[16px] rounded-md">
@@ -66,6 +138,7 @@ const SendArea: FunctionComponent<SendAreaProps> = forwardRef(
                 ref={inputRefItem}
                 placeholder={description}
                 autoComplete="off"
+                // @ts-ignore
                 onKeyDown={handleKeydown}
                 disabled={ifDisabled || inDescriptionOrBlend}
                 autoFocus
@@ -92,8 +165,8 @@ const SendArea: FunctionComponent<SendAreaProps> = forwardRef(
                 <ClearIcon />
               </button>
             </div>
-            {/* Centered stats text below the Send and Clear buttons */}
-            <div className="text-center my-2">{stats}</div>
+            {/* Center the stats text on a new row */}
+            <div className="text-center mt-2">{stats}</div>
           </div>
         )}
       </div>
