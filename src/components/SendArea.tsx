@@ -35,7 +35,6 @@ const SendArea: FunctionComponent<SendAreaProps> = forwardRef(
 
     useEffect(() => {
       setImageUpload(imageSrcs);
-      // if(imageSrcs.length===0) return
       console.log(imageSrcs);
     }, [imageSrcs]);
 
@@ -81,14 +80,11 @@ const SendArea: FunctionComponent<SendAreaProps> = forwardRef(
       return imageLength > 0;
     }, [imageSrcs]);
 
-    // Function to fetch and update the stats every 5 minutes
     const fetchAndUpdateStats = async () => {
       try {
-        // Make an HTTP request to fetch the stats data
         const response = await fetch('/stats.txt');
         if (response.ok) {
           const statsData = await response.text();
-          // Update the stats
           setStats(statsData);
         } else {
           console.error('Failed to fetch stats data');
@@ -98,12 +94,9 @@ const SendArea: FunctionComponent<SendAreaProps> = forwardRef(
       }
     };
 
-    // Update the stats initially and every 5 minutes (300,000 milliseconds)
     useEffect(() => {
-      fetchAndUpdateStats(); // Fetch initially
+      fetchAndUpdateStats();
       const intervalId = setInterval(fetchAndUpdateStats, 300000);
-
-      // Cleanup the interval when the component unmounts
       return () => clearInterval(intervalId);
     }, []);
 
@@ -138,7 +131,6 @@ const SendArea: FunctionComponent<SendAreaProps> = forwardRef(
                 ref={inputRefItem}
                 placeholder={description}
                 autoComplete="off"
-                // @ts-ignore
                 onKeyDown={handleKeydown}
                 disabled={ifDisabled || inDescriptionOrBlend}
                 autoFocus
@@ -149,6 +141,10 @@ const SendArea: FunctionComponent<SendAreaProps> = forwardRef(
                 className="gen-textarea"
                 rows={1}
               />
+
+              {/* Centered stats text */}
+              <div className="stats-text text-center my-2">{stats}</div>
+
               <button
                 onClick={handleButtonClick}
                 disabled={ifDisabled}
@@ -164,9 +160,6 @@ const SendArea: FunctionComponent<SendAreaProps> = forwardRef(
               >
                 <ClearIcon />
               </button>
-
-              {/* Display the stats text below the send icon */}
-              <div className="stats-text">{stats}</div>
             </div>
           </div>
         )}
