@@ -130,6 +130,9 @@ const SendArea = forwardRef(({
             </div>
           </div>
         )}
+          <div>
+              {stats}
+          </div>
       </div>
     );
 })
