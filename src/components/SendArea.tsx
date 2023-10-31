@@ -108,7 +108,7 @@ const SendArea: FunctionComponent<SendAreaProps> = forwardRef(
     }, []);
 
     return (
-      <div className="fixed left-1/2 transform -translate-x-1/2 bottom-40px md:left-auto !md:right-auto w-[90%] sm:w-[90%] backdrop-blur-md pt-1 px-4 pb-4 z-100 text-[16px] rounded-md">
+      <div className="fixed left-1/2 transform -translate-x-1/2 bottom-40px w-[90%] sm:w-[90%] backdrop-blur-md pt-1 px-4 pb-4 z-100 text-[16px] rounded-md">
         {ifLoading ? (
           <div className="gen-cb-wrapper">
             <span>Thinking...</span>
