@@ -26,7 +26,7 @@ function App() {
             <Router>
                 <main>
                     {session ? (
-                        <SignIn />
+                        <ChatPage />
                     ) : (
                         <Routes>
                             <Route path="" element={<ChatPage />} />
