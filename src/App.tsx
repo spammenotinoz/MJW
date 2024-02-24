@@ -15,24 +15,23 @@ import 'katex/dist/katex.min.css';
 const queryClient = new QueryClient();
 
 function App() {
-    const session = supabase.auth.session();
 
     return (
-        <QueryClientProvider client={queryClient}>
-            <Router>
-                <main>
-                    {!session ? (
-                        <SignIn />
-                    ) : (
+        <>
+            <QueryClientProvider client={ queryClient }>
+                <Router>
+                    <main>
                         <Routes>
-                            <Route path="" element={<ChatPage />} />
+                            <Route path="" element={ <ChatPage/> }/>
                         </Routes>
-                    )}
-                </main>
-            </Router>
-        </QueryClientProvider>
+                    </main>
+                </Router>
+            </QueryClientProvider>
+        </>
     );
 }
+
+export default App;
 
 
 export default App;
