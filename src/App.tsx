@@ -4,8 +4,7 @@ import './App.css';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import { ChatPage } from './pages/Chat'; // Adjust the import path as necessary
-import { SignIn } from './pages/SignIn';
-
+import SignIn from './pages/SignIn';
 
 import 'virtual:uno.css';
 import '@unocss/reset/tailwind.css';
@@ -15,21 +14,24 @@ import 'katex/dist/katex.min.css';
 const queryClient = new QueryClient();
 
 function App() {
-
+    const session = supabase.auth.session();
 
     return (
-        <>
-            <QueryClientProvider client={ queryClient }>
-                <Router>
-                    <main>
+        <QueryClientProvider client={queryClient}>
+            <Router>
+                <main>
+                    {!session ? (
+                        <SignIn />
+                    ) : (
                         <Routes>
-                            <Route path="" element={ <SignIn/> }/>
+                            <Route path="" element={<ChatPage />} />
                         </Routes>
-                    </main>
-                </Router>
-            </QueryClientProvider>
-        </>
+                    )}
+                </main>
+            </Router>
+        </QueryClientProvider>
     );
 }
+
 
 export default App;
