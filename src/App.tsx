@@ -16,13 +16,14 @@ const queryClient = new QueryClient();
 
 function App() {
 
+
     return (
         <>
             <QueryClientProvider client={ queryClient }>
                 <Router>
                     <main>
                         <Routes>
-                            <Route path="" element={ <SignIn/> }/>
+                            <Route path="" element={ <ChatPage/> }/>
                         </Routes>
                     </main>
                 </Router>
