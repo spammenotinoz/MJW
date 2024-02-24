@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
-#import { supabase } from '../utils/supabaseClient';
+import { supabase } from '../utils/supabaseClient';
+import { useNavigate } from 'react-router-dom'; // Import useNavigate
 
 function SignIn() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const navigate = useNavigate(); // Create navigate function
 
     const handleSignIn = async (e) => {
         e.preventDefault();
@@ -11,7 +13,7 @@ function SignIn() {
             const { error } = await supabase.auth.signIn({ email, password });
             if (error) throw error;
             alert('Signed in successfully');
-            // Redirect user or update UI
+            navigate('/dashboard'); // Redirect to the dashboard or another route
         } catch (error) {
             alert(error.error_description || error.message);
         }
