@@ -19,16 +19,19 @@ function App() {
     return (
         <QueryClientProvider client={queryClient}>
             <Router>
-                <Routes>
-                    {/* Redirect based on authentication status */}
-                    <Route path="/" element={session ? <Navigate to="/chat" /> : <SignIn />} />
-                    {/* Protected Route */}
-                    <Route path="/chat" element={session ? <ChatPage /> : <Navigate to="/" />} />
-                    {/* Add more routes as needed */}
-                </Routes>
+                <main>
+                    {!session ? (
+                        <SignIn />
+                    ) : (
+                        <Routes>
+                            <Route path="" element={<ChatPage />} />
+                        </Routes>
+                    )}
+                </main>
             </Router>
         </QueryClientProvider>
     );
 }
+
 
 export default App;
