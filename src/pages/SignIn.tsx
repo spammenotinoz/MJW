@@ -1,16 +1,30 @@
-import React from 'react'; // Import React from 'react'
-import { Header } from '@/components/Header';
-import Generator from '@/components/Generator';
-import QuickGo from '@/components/QuickGo';
-import { Footer } from '@/components/Footer';
+import React, { useState } from 'react';
+import {Header} from '@/components/Header';
+import { supabase } from '../utils/supabaseClient';
+import { useNavigate } from 'react-router-dom'; // Import useNavigate
 
 export function SignIn() {
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const navigate = useNavigate(); // Create navigate function
+
+    const handleSignIn = async (e) => {
+        e.preventDefault();
+        try {
+            const { error } = await supabase.auth.signIn({ email, password });
+            if (error) throw error;
+            alert('Signed in successfully');
+            navigate('/dashboard'); // Redirect to the dashboard or another route
+        } catch (error) {
+            alert(error.error_description || error.message);
+        }
+    };
+
     return (
-        <div>
-            <Header/>
-            <Generator/>
-            <Footer/>
-            <QuickGo/>
-        </div>
+        <form onSubmit={handleSignIn}>
+            <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Email" required />
+            <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Password" required />
+            <button type="submit">Sign In</button>
+        </form>
     );
 }
