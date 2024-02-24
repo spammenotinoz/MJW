@@ -21,6 +21,7 @@ function App() {
 
     return (
         <>
+            {!session ? <SignIn /> : "User's Dashboard or Protected Content"}
             <QueryClientProvider client={ queryClient }>
                 <Router>
                     <main>
