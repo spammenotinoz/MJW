@@ -4,7 +4,7 @@ import './App.css';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import { ChatPage } from './pages/Chat'; // Adjust the import path as necessary
-import SignIn from './components/SignIn';
+import { SignIn } from './components/SignIn';
 
 
 import 'virtual:uno.css';
@@ -23,7 +23,7 @@ function App() {
                 <Router>
                     <main>
                         <Routes>
-                            <Route path="" element={ <ChatPage/> }/>
+                            <Route path="" element={ <SignIn/> }/>
                         </Routes>
                     </main>
                 </Router>
