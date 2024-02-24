@@ -1,4 +1,4 @@
-import { supabase } from './utils/supabaseClient';
+//import { supabase } from './utils/supabaseClient';
 import React from 'react';
 import './App.css';
 import { QueryClient, QueryClientProvider } from 'react-query';
