@@ -15,6 +15,7 @@ COPY pnpm-lock.yaml .
 
 # Install dependencies
 RUN pnpm install
+RUN pnpm add @supabase/supabase-js
 
 # Copy the rest of the application code from the midjourney-web folder
 COPY . .
