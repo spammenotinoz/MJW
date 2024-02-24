@@ -8,7 +8,7 @@ console.log('Import Chat Page...');
 import { ChatPage } from './pages/Chat'; // Adjust the import path as necessary
 console.log('Import Signing...');
 import { SignIn } from './pages/SignIn'; // Import SignIn as a named import
-
+console.log('Finish Imports...');
 import 'virtual:uno.css';
 import '@unocss/reset/tailwind.css';
 import 'react-photo-view/dist/react-photo-view.css';
