@@ -19,11 +19,11 @@ function App() {
         <QueryClientProvider client={queryClient}>
             <Router>
                 <main>
-                    {!session ? (
+                    {session ? (
                         <SignIn />
                     ) : (
                         <Routes>
-                            <Route path="" element={<ChatPage />} />
+                            <Route path="" element={<SignIn />} />
                         </Routes>
                     )}
                 </main>
