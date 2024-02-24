@@ -9,11 +9,15 @@ import 'react-photo-view/dist/react-photo-view.css';
 // import 'highlight.js/styles/github-dark-dimmed.css';
 import 'katex/dist/katex.min.css';
 
-
 const queryClient = new QueryClient();
 
-function App() {
+//Authentication Logic
+import React from 'react';
+import { supabase } from './utils/supabaseClient';
+import SignIn from './components/SignIn';
 
+function App() {
+    const session = supabase.auth.session();
 
     return (
         <>
