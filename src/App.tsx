@@ -1,10 +1,9 @@
-import { supabase } from './utils/supabaseClient';
 import React from 'react';
 import './App.css';
 import { QueryClient, QueryClientProvider } from 'react-query';
-import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { ChatPage } from './pages/Chat'; // Adjust the import path as necessary
-import { SignIn } from './pages/SignIn';
+import { SignIn } from './pages/SignIn'; // Import SignIn as a named import
 
 import 'virtual:uno.css';
 import '@unocss/reset/tailwind.css';
@@ -32,6 +31,5 @@ function App() {
         </QueryClientProvider>
     );
 }
-
 
 export default App;
