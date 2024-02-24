@@ -20,6 +20,7 @@
     "preinstall": "npx only-allow pnpm"
   },
   "dependencies": {
+    "@supabase/supabase-js": "^1.28.5",
     "@theme-toggles/react": "^4.1.0",
     "@vue/reactivity": "^3.3.4",
     "ahooks": "^3.7.8",
