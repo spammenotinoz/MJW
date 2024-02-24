@@ -5,7 +5,7 @@ settings:
   excludeLinksFromLockfile: false
 
 dependencies:
-  '@supabase/supabase-js:
+  '@supabase/supabase-js':
     specifier: ^1.28.5
   '@theme-toggles/react':
     specifier: ^4.1.0
