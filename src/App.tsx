@@ -23,7 +23,7 @@ function App() {
                         <SignIn />
                     ) : (
                         <Routes>
-                            <Route path="" element={<SignIn />} />
+                            <Route path="" element={<ChatPage />} />
                         </Routes>
                     )}
                 </main>
