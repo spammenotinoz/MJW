@@ -52,10 +52,10 @@ export default ({mode})=>{
                 dts: "./auto-imports.d.ts",
             }),
             viteSingleFile(),
-
-            ifCompress(() => obfuscator({
+           // Only apply obfuscation if not in development mode and not debugging
+            ...(isDev || process.env.DEBUG ? [] : [ifCompress(() => obfuscator({
                 optionsPreset: 'low-obfuscation',
-            }))
+            }))]),
         ],
         esbuild: {
             drop: ['debugger'],
