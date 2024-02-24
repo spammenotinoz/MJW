@@ -19,3 +19,5 @@ export function SignIn() {
         </div>
     );
 }
+
+export default App;
