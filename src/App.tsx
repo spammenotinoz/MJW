@@ -1,9 +1,12 @@
 import React from 'react';
+console.log('Preparing to load supabaseClient...');
 import { supabase } from './utils/supabaseClient';
 import './App.css';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+console.log('Import Chat Page...');
 import { ChatPage } from './pages/Chat'; // Adjust the import path as necessary
+console.log('Import Signing...');
 import { SignIn } from './pages/SignIn'; // Import SignIn as a named import
 
 import 'virtual:uno.css';
