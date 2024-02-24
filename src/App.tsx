@@ -14,7 +14,9 @@ import 'katex/dist/katex.min.css';
 const queryClient = new QueryClient();
 
 function App() {
+    console.log('Checking for Supabase session...');
     const session = supabase.auth.session();
+    console.log('Supabase session:', session);
 
     return (
         <QueryClientProvider client={queryClient}>
