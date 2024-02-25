@@ -37,7 +37,7 @@ export function SignIn() {
                 className="mb-6 rounded-md border bg-inherit px-4 py-2"
                 type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="********" required 
             />
-                <button type="submit" style={{ backgroundColor: 'blue-700', color: 'white' }} className="mb-2 rounded-md px-4 py-2">Sign In</button>
+                <button type="submit" className="mb-2 rounded-md bg-blue-700 !bg-blue-500 px-4 py-2 text-white">Sign In</button>
             </form>
         </div>
     );
