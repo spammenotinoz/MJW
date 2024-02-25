@@ -16,7 +16,7 @@ export function SignIn() {
             const { error } = await supabase.auth.signIn({ email, password });
             if (error) throw error;
             alert('Signed in successfully');
-            navigate('/');
+            navigate(<ChatPage />);
         } catch (error) {
             alert(error.error_description || error.message);
         }
