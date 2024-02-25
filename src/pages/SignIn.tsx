@@ -25,8 +25,12 @@ export function SignIn() {
             className="animate-in text-foreground flex w-full flex-1 flex-col justify-center gap-2"
             onSubmit={handleSignIn}
         >
-            <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Email" required />
-            <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Password" required />
+            <input
+                className="mb-3 rounded-md border bg-inherit px-4 py-2"
+                type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="you@example.com" required />
+            <input
+                className="mb-6 rounded-md border bg-inherit px-4 py-2"
+                type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="********" required />
             <button type="submit">Sign In</button>
         </form>
     );
