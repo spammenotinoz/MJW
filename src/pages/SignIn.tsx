@@ -21,10 +21,18 @@ export function SignIn() {
     };
 
     return (
-        <form onSubmit={handleSignIn}>
-            <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Email" required />
+        <div className="flex w-full flex-1 flex-col justify-center gap-2 px-8 sm:max-w-md">           
+        <form onSubmit={handleSignIn}>          
+            <input type="email" className="mb-3 rounded-md border bg-inherit px-4 py-2" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="you@example.com" required />
+            required
+        />
+            
             <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Password" required />
-            <button type="submit">Sign In</button>
+            <SubmitButton className="mb-2 rounded-md bg-blue-700 px-4 py-2 text-white">
+              Login
+            </SubmitButton>
         </form>
+
+        </div>        
     );
 }
