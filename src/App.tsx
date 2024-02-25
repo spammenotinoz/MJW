@@ -6,6 +6,12 @@ import { supabase } from './utils/supabaseClient';
 import ChatPage from './pages/Chat'; // Adjust the import path as necessary
 import SignIn from './pages/SignIn'; // Adjust the import path as necessary
 import './App.css';
+
+import 'virtual:uno.css';
+import '@unocss/reset/tailwind.css';
+import 'react-photo-view/dist/react-photo-view.css';
+import 'katex/dist/katex.min.css';
+
 // Import CSS files as before
 
 const queryClient = new QueryClient();
