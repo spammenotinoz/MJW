@@ -38,6 +38,15 @@ export function SignIn() {
                 type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="********" required 
             />
                 <button type="submit" className="mb-2 rounded-md bg-blue-700 px-4 py-2 text-white">Sign In</button>
+
+        <SubmitButton
+          //formAction=
+          className="border-foreground/20 mb-2 rounded-md border px-4 py-2"
+        >
+            
+          Sign Up
+        </SubmitButton>
+            
         </form>
         </div>
     );
