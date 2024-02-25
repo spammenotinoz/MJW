@@ -21,6 +21,7 @@ export function SignIn() {
     };
 
     return (
+        <div className="flex w-full flex-1 flex-col justify-center gap-2 px-8 sm:max-w-md">        
         <form
             className="animate-in text-foreground flex w-full flex-1 flex-col justify-center gap-2"
             onSubmit={handleSignIn}
@@ -33,5 +34,6 @@ export function SignIn() {
                 type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="********" required />
             <button type="submit">Sign In</button>
         </form>
+        </div>
     );
 }
