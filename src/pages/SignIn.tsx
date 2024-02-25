@@ -28,11 +28,15 @@ export function SignIn() {
         >
             <input
                 className="mb-3 rounded-md border bg-inherit px-4 py-2"
-                type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="you@example.com" required />
+                type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="you@example.com" required 
+            />
             <input
                 className="mb-6 rounded-md border bg-inherit px-4 py-2"
-                type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="********" required />
-            <button type="submit">Sign In</button>
+                type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="********" required 
+            />
+            <SubmitButton className="mb-2 rounded-md bg-blue-700 px-4 py-2 text-white">
+              Login
+            </SubmitButton>
         </form>
         </div>
     );
