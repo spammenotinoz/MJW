@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import {Header} from '@/components/Header';
 import { supabase } from '../utils/supabaseClient';
 import { useNavigate } from 'react-router-dom'; // Import useNavigate
-import { Brand } from "@/components/brand"
-import { SubmitButton } from "@/components/submit-button"
+import { Brand } from "@/components/brand";
+import { SubmitButton } from "@/components/submit-button";
 
 export function SignIn() {
     const [email, setEmail] = useState('');
