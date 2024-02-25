@@ -3,7 +3,7 @@ import {Header} from '@/components/Header';
 import { supabase } from '../utils/supabaseClient';
 import { useNavigate } from 'react-router-dom'; // Import useNavigate
 //import { Brand } from "@/components/brand";
-import { SubmitButton } from "@/components/submit-button";
+import { ChatPage } from './pages/Chat'; // Adjust the import path as necessary
 
 export function SignIn() {
     const [email, setEmail] = useState('');
