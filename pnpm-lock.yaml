@@ -7,6 +7,10 @@ settings:
 dependencies:
   '@supabase/supabase-js':
     specifier: ^1.28.5
+
+  '@radix-ui/react-slot':
+    specifier: ^1.0.2
+    
   '@theme-toggles/react':
     specifier: ^4.1.0
     version: 4.1.0(react-dom@18.2.0)(react@18.2.0)
