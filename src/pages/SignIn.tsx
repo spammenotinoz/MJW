@@ -23,6 +23,7 @@ export function SignIn() {
 
     return (
         <div className="flex w-full min-h-screen items-center justify-center px-8 sm:max-w-md">
+        <div class="text-4xl font-bold tracking-wide">Ultimate AI</div>
     <form
         className="animate-in text-foreground flex w-full flex-col justify-center gap-2"
         onSubmit={handleSignIn}
