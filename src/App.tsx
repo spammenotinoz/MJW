@@ -1,37 +1,44 @@
-import React from 'react';
-console.log('Preparing to load supabaseClient...');
-import { supabase } from './utils/supabaseClient';
-import './App.css';
+// App.tsx
+import React, { useEffect, useState } from 'react';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from 'react-query';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-console.log('Import Chat Page...');
-import { ChatPage } from './pages/Chat'; // Adjust the import path as necessary
-console.log('Import Signing...');
-import { SignIn } from './pages/SignIn'; // Import SignIn as a named import
-console.log('Finish Imports...');
-import 'virtual:uno.css';
-import '@unocss/reset/tailwind.css';
-import 'react-photo-view/dist/react-photo-view.css';
-import 'katex/dist/katex.min.css';
+import { supabase } from './utils/supabaseClient';
+import ChatPage from './pages/Chat'; // Adjust the import path as necessary
+import SignIn from './pages/SignIn'; // Adjust the import path as necessary
+import './App.css';
+// Import CSS files as before
 
 const queryClient = new QueryClient();
 
 function App() {
-    console.log('Checking for Supabase session...');
-    const session = supabase.auth.session();
-    console.log('Supabase session:', session);
+    const [session, setSession] = useState(supabase.auth.session());
+
+    useEffect(() => {
+        const { data: authListener } = supabase.auth.onAuthStateChange((_event, session) => {
+            setSession(session);
+        });
+
+        return () => {
+            authListener?.unsubscribe();
+        };
+    }, []);
 
     return (
         <QueryClientProvider client={queryClient}>
             <Router>
                 <main>
-                    {!session ? (
-                        <SignIn />
-                    ) : (
-                        <Routes>
-                            <Route path="" element={<ChatPage />} />
-                        </Routes>
-                    )}
+                    <Routes>
+                        {!session ? (
+                            <Route path="/" element={<SignIn />} />
+                        ) : (
+                            <Route path="/" element={<ChatPage />} />
+                        )}
+                        {/* Redirect all unknown routes to SignIn or ChatPage based on session */}
+                        <Route
+                            path="*"
+                            element={session ? <Navigate to="/" /> : <Navigate to="/" replace />}
+                        />
+                    </Routes>
                 </main>
             </Router>
         </QueryClientProvider>
