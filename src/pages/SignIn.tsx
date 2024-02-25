@@ -27,10 +27,12 @@ export function SignIn() {
         className="animate-in text-foreground flex w-full flex-col justify-center gap-2"
         onSubmit={handleSignIn}
         >
+            <label htmlFor="Email" className="mb-1 text-left">Email</label>
             <input
                 className="mb-3 rounded-md border bg-inherit px-4 py-2"
                 type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="you@example.com" required 
             />
+            <label htmlFor="Email" className="mb-1 text-left">Password</label>
             <input
                 className="mb-6 rounded-md border bg-inherit px-4 py-2"
                 type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="********" required 
