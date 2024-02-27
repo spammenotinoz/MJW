@@ -2,7 +2,7 @@ import React from 'react';
 
 export default function () {
     return (
-        <svg  viewBox="0 0 280 280" width="180px" height="180px"
+        <svg  viewBox="0 0 280 280" width="90px" height="90px"
              fill="currentColor" xmlns="http://www.w3.org/2000/svg">
             <g clipPath="url(#clip0_5_28)">
                 <g mask="url(#mask0_5_28)">
