@@ -18,6 +18,9 @@ export async function fetchMJPost(url = '', data = {}) {
       },
       body: JSON.stringify(data),
     });
+    if (!response.ok) {
+        throw new Error(response.statusText)
+    }
     return response.json()
 }
 
@@ -30,14 +33,10 @@ export async function fetchMJGet(url = '') {
         "mj-api-secret": import.meta.env.VITE_MIDJOURNEY_PROXY_API_SECRET ?? "",
       },
     });
-
     if (!response.ok) {
-        const errorBody = await response.json();
-        const errorMessage = errorBody.description || 'Unknown error occurred';
-        throw new Error(errorMessage);
+        throw new Error(response.statusText)
     }
-
-    return response.json();
+    return response.json()
 }
 
 export async function fetchPut(url = '', data = {}) {
