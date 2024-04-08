@@ -30,10 +30,14 @@ export async function fetchMJGet(url = '') {
         "mj-api-secret": import.meta.env.VITE_MIDJOURNEY_PROXY_API_SECRET ?? "",
       },
     });
+
     if (!response.ok) {
-        throw new Error(response.statusText)
+        const errorBody = await response.json();
+        const errorMessage = errorBody.description || 'Unknown error occurred';
+        throw new Error(errorMessage);
     }
-    return response.json()
+
+    return response.json();
 }
 
 export async function fetchPut(url = '', data = {}) {
