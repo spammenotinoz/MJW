@@ -36,6 +36,9 @@ export const useGenerateResult = () => {
       const action = body.action;
       if (action === 'IMAGINE') {
         response = await mjImageByPrompt(body.content);
+        if (response?.description?.includes("Banned prompt detected")) {
+          throw new Error("Banned prompt detected");
+        }
       } else if (action === 'VARIATION') {
         response = await mjImageUpVariate(
           body.actionInfo?.taskId ?? '',
