@@ -36,9 +36,6 @@ export const useGenerateResult = () => {
       const action = body.action;
       if (action === 'IMAGINE') {
         response = await mjImageByPrompt(body.content);
-        if (response?.code !== 1) {
-          throw new Error(response?.description || 'Unknown error');
-        }
       } else if (action === 'VARIATION') {
         response = await mjImageUpVariate(
           body.actionInfo?.taskId ?? '',
@@ -62,25 +59,20 @@ export const useGenerateResult = () => {
       }
 
       console.log(response);
+
+      if (response?.code !== 1) {
+        throw new Error(response?.description || 'Unknown error');
+      }
+
       setTaskId(response?.result);
       setWorking(true);
-      const code = response?.code;
-      const result = response?.result;
-      if (code === 1) {
-        console.log('提交成功');
-        return result;
-      }
-      if (code === 0) {
-        throw new Error('task is already exist');
-      }
-      if (code === 1) {
-        throw new Error('wait in list');
-      }
-      return {};
+
+      return response?.result;
     } catch (error) {
       const errorResponse = error as ErrorMessage;
       setCurrentError(error as any);
-      return {};
+      setWorking(false);
+      throw error;
     }
   }
 
